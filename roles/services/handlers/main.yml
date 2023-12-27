@@ -1,0 +1,4 @@
+- name: reload nsd
+  systemd:
+    name: nsd
+    state: reloaded

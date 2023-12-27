@@ -1,0 +1,27 @@
+$ORIGIN aibo.dn42.
+$TTL 3600
+
+@	IN	SOA	ns1.aibo.dn42. dn42.aibor.de. (
+	2023122600
+	1800
+	600
+	1209600
+	600
+)
+
+@	IN	NS	ns1.aibo.dn42.
+
+ns1	IN	A	172.23.37.53
+	IN	AAAA	fdcd:c2da:c2c4:4253::1
+
+de-fsn1	IN	A	172.23.37.33
+	IN	AAAA	fdcd:c2da:c2c4::1
+
+de-nbg1	IN	A	172.23.37.34
+	IN	AAAA	fdcd:c2da:c2c4::2
+
+fi-hel1	IN	A	172.23.37.35
+	IN	AAAA	fdcd:c2da:c2c4::3
+
+de-dd1	IN	A	172.23.37.38
+	IN	AAAA	fdcd:c2da:c2c4:4438::1

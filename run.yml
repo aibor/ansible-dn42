@@ -1,0 +1,15 @@
+- hosts: all
+
+  roles:
+    - role: base
+      tags: base
+    - role: bird
+      tags: bird
+    - role: wireguard
+      tags: wireguard
+
+- hosts: de
+
+  roles:
+    - role: services
+      tags: services

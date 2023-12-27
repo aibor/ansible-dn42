@@ -1,0 +1,24 @@
+wireguard:
+  internal:
+    address: fe80::42:2/64
+    peers: 
+      - name: de-fsn1
+        port: 51467
+        pubkey: s2iBUyJsTd/IhCMIB8seofCKUusNkz0r3dDx0ig9w0I=
+      - name: fi-hel1
+        port: 51469
+        pubkey: 7U1DUCZvTCvDs109Scpe0EU98qJPGD8QizP0PXEuzFI=
+      - name: de-dd1
+        port: 51466
+        mtu: 1412
+        pubkey: 1LURiaH6ukkufSmnZSh02POcI2Qfk1rVnZfphsUBQW4=
+        dynamic: yes
+  external:
+    peers:
+      - name: kioubit-de2
+        port: 51470
+        pubkey: B1xSG/XTJRLd+GrWDsB06BqnIq8Xud93YVh/LYYYtUY=
+        endpoint: de2.g-load.eu:21464
+        ipv6:
+          address: fe80::1464/128
+          peer: fe80::ade0/128

@@ -1,0 +1,37 @@
+wireguard:
+  internal:
+    address: fe80::42:1/64
+    peers: 
+      - name: de-nbg1
+        port: 51467
+        pubkey: UWm9TkkKqhhBPr6frW4YgysswMIVkvdcdmbXRBw7Mjg=
+      - name: fi-hel1
+        port: 51468
+        pubkey: l3udX7VpIzdnnRRLLdErVp9Vq/GyG23Cn3mVl97H82s=
+      - name: de-dd1
+        port: 51466
+        mtu: 1412
+        pubkey: d8O/M5dMRzRRnl+n1OOaL50fUeTHPbq0WGQqknzz9BI=
+        dynamic: yes
+  external:
+    peers:
+      - name: hrnz1
+        port: 51464
+        pubkey: OBKtQxGwOQrXJ3atvj24c18jMYyuzNjS5HONKOq/0UU=
+        endpoint: melon.hrnz.li:51464
+        ipv4:
+          address: 172.23.37.33/32
+          peer: 172.23.75.33/32
+        ipv6:
+          address: fe80::1464/128
+          peer: fe80::2273/128
+      - name: bastel1
+        port: 51465
+        pubkey: DJXxDJYRQuqAhlsH/VYoUAk+2FTCnYOLmX+Qk+Wlflk=
+        endpoint: router02.bastelfreak.org:1464
+        ipv4:
+          address: 172.23.37.33/32
+          peer: 172.20.246.130/32
+        ipv6:
+          address: fe80::1464/128
+          peer: fe80::3668/128

@@ -1,0 +1,26 @@
+- name: packages
+  apt:
+    name:
+      - nsd
+
+- name: dn42 service netns service
+  copy:
+    src: dn42-ip-netns@.service
+    dest: /etc/systemd/system/
+
+- name: service override
+  copy:
+    src: override.conf
+    dest: /etc/systemd/system/nsd.service.d/
+
+- name: nsd config
+  copy:
+    src: nsd.conf
+    dest: /etc/nsd/nsd.conf.d/dn42.conf
+  notify: reload nsd
+
+- name: nsd zones
+  copy:
+    src: zones
+    dest: /etc/nsd/
+  notify: reload nsd

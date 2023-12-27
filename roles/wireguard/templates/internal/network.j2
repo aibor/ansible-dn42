@@ -1,0 +1,15 @@
+[Match]
+Name=i-{{ peer.name }}
+
+{% if "mtu" in peer %}
+[Link]
+MTUBytes={{ peer.mtu }}
+
+{% endif -%}
+[Network]
+DHCP=no
+IPv6AcceptRA=false
+IPForward=yes
+
+[Address]
+Address={{ wireguard.internal.address }}

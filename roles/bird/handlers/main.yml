@@ -1,0 +1,7 @@
+- name: reload bird
+  command: birdc configure
+
+- name: restart gortr
+  systemd:
+    name: gortr
+    state: restarted

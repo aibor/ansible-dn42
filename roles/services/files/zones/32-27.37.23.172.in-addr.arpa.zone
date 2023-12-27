@@ -1,0 +1,18 @@
+$ORIGIN 32/27.37.23.172.in-addr.arpa.
+$TTL 3600
+
+@	IN	SOA	ns1.aibo.dn42. dn42.aibor.de. (
+	2023122600
+	1800
+	600
+	1209600
+	600
+)
+
+@	IN	NS	ns1.aibo.dn42.
+
+33	IN	PTR	de-fsn1.aibo.dn42.
+34	IN	PTR	de-nbg1.aibo.dn42.
+35	IN	PTR	fi-hel1.aibo.dn42.
+38	IN	PTR	de-dd1.aibo.dn42.
+53	IN	PTR	ns1.aibo.dn42.

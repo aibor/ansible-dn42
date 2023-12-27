@@ -1,0 +1,10 @@
+wireguard:
+  internal:
+    address: fe80::42:3/64
+    peers: 
+      - name: de-fsn1
+        port: 51468
+        pubkey: 61sUWoyCyl6rn+6fx/QHUxieOucRtYBbVoJiK05wDmc=
+      - name: de-nbg1
+        port: 51469
+        pubkey: jXh8c4+nzMYo+wKOl1FN4fJB+gkNwQ8lU76uS63UmSI=

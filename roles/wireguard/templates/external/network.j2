@@ -1,0 +1,17 @@
+[Match]
+Name=p-{{ peer.name }}
+
+[Network]
+DHCP=no
+IPv6AcceptRA=false
+IPForward=yes
+
+{% if 'ipv4' in peer %}
+[Address]
+Address={{ peer.ipv4.address }}
+Peer={{ peer.ipv4.peer }}
+
+{% endif %}
+[Address]
+Address={{ peer.ipv6.address }}
+Peer={{ peer.ipv6.peer }}

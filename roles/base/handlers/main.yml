@@ -1,0 +1,17 @@
+- name: reload sshd
+  systemd:
+    name: sshd
+    state: reloaded
+
+- name: reload nftables
+  systemd:
+    name: nftables
+    state: reloaded
+
+- name: reload networkd
+  systemd:
+    name: systemd-networkd
+    state: reloaded
+
+- name: update initramfs
+  command: update-initramfs -u

@@ -1,0 +1,4 @@
+/.vault_password
+/etc/
+/ansible.log
+/venv/

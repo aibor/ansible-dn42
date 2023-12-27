@@ -1,0 +1,81 @@
+- name: packages present
+  apt:
+    update_cache: yes
+    name:
+      - vim
+      - irqbalance
+      - tcpdump
+      - unattended-upgrades
+      - needrestart
+      - wireguard-tools
+      - git
+
+- name: packages absent
+  apt:
+    state: absent
+    autoremove: yes
+    purge: yes
+    name:
+      - cron
+      - cron-daemon-common
+      - at
+      - ifupdown
+      - iptables
+
+- name: configs
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - {src: inputrc, dest: /etc/inputrc}
+    - {src: resolv.conf, dest: /etc/resolv.conf}
+    - {src: apt.conf, dest: /etc/apt/apt.conf.d/99custom}
+    - {src: bashrc, dest: /root/.bashrc}
+    - {src: prometheus-node-exporter, dest: /etc/default/}
+    - {src: prometheus-bird-exporter, dest: /etc/default/}
+
+- name: ssh configs
+  copy:
+    src: sshd.conf
+    dest: /etc/ssh/sshd_config.d/custom.conf
+  notify: reload sshd
+
+- name: nftables configs
+  copy:
+    src: nftables.conf
+    dest: /etc/nftables.conf
+  notify: reload nftables
+
+- name: hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+
+- name: network config
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/systemd/network/{{ item }}"
+    owner: systemd-network
+    group: systemd-network
+    mode: "0640"
+  loop:
+    - 10-eth0.link
+    - 10-eth0.network
+    - 30-dn42.netdev
+    - 30-dn42.network
+  notify: reload networkd
+
+- name: remove udev rule
+  file:
+    path: /etc/udev/rules.d/70-persistent-net.rules
+    state: absent
+  notify: update initramfs
+
+- name: enable services
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  loop:
+    - systemd-networkd
+    - nftables
+

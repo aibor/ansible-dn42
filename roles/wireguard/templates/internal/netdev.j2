@@ -1,0 +1,15 @@
+[NetDev]
+Name=i-{{ peer.name }}
+Kind=wireguard
+Description=WireGuard tunnel to {{ peer.name }}
+
+[WireGuard]
+ListenPort={{ peer.port }}
+PrivateKeyFile=/etc/systemd/network/i-{{ peer.name }}.key
+
+[WireGuardPeer]
+PublicKey={{ peer.pubkey }}
+PresharedKeyFile=/etc/systemd/network/i-{{ peer.name }}.psk
+AllowedIPs=0.0.0.0/0
+AllowedIPs=::/0
+{% if not (peer.dynamic | default(false)) %}Endpoint={{ peer.name }}.dn42.aibor.de:{{ peer.port }}{% endif -%}

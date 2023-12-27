@@ -1,0 +1,11 @@
+- name: external peer config for {{ peer.name }}
+  template:
+    src: external/{{ item.file }}.j2
+    dest: /etc/systemd/network/{{ item.prefix }}p-{{ peer.name }}.{{ item.file }}
+    owner: systemd-network
+    group: systemd-network
+    mode: "0640"
+  loop:
+    - {file: netdev, prefix: "50-"}
+    - {file: network, prefix: "50-"}
+    - {file: key, prefix: ""}

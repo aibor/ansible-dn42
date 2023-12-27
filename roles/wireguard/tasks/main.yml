@@ -1,0 +1,12 @@
+- name: internal peers
+  include_tasks: internal.yml
+  loop: "{{ wireguard.internal.peers }}"
+  loop_control:
+    loop_var: peer
+
+- name: external peers
+  include_tasks: external.yml
+  loop: "{{ wireguard.external.peers }}"
+  loop_control:
+    loop_var: peer
+  when: "'external' in wireguard"

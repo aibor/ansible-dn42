@@ -1,0 +1,12 @@
+# Run "gortr -h" to see the available command line options and their
+# defaults.
+#
+# Other useful resources are https://github.com/cloudflare/gortr and
+# https://github.com/cloudflare/cfrpki .
+
+# By default do not verify the input:
+GORTR_ARGS=-bind [::1]:323 -verify=false -checktime=false -cache=https://dn42.burble.com/roa/dn42_roa_46.json
+
+# To enable verifying the input use instead something like:
+#GORTR_ARGS=-bind :323 -verify.key=/etc/octorpki/public.pem -cache http://localhost:8080/output.json
+

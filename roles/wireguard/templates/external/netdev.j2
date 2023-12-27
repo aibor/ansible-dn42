@@ -1,0 +1,14 @@
+[NetDev]
+Name=p-{{ peer.name }}
+Kind=wireguard
+Description=WireGuard tunnel to {{ peer.name }}
+
+[WireGuard]
+ListenPort={{ peer.port }}
+PrivateKeyFile=/etc/systemd/network/p-{{ peer.name }}.key
+
+[WireGuardPeer]
+PublicKey={{ peer.pubkey }}
+AllowedIPs=0.0.0.0/0
+AllowedIPs=::/0
+Endpoint={{ peer.endpoint }}

@@ -1,0 +1,32 @@
+- name: package bird2
+  apt:
+    name:
+      - bird2
+
+- name: package gortr
+  apt:
+    deb: "http://mirror.hetzner.de/debian/packages/pool/main/g/gortr/gortr_0.14.7-1+b5_arm64.deb"
+
+- name: gortr config
+  copy:
+    src: gortr
+    dest: /etc/default/gortr
+  notify: restart gortr
+
+- name: bird config header
+  template:
+    src: header.conf.j2
+    dest: /etc/bird/header.conf
+  notify: reload bird
+
+- name: bird static config
+  copy:
+    src: "{{ item }}"
+    dest: /etc/bird/
+  loop:
+    - bird.conf
+    - filters.conf
+    - community_filters.conf
+    - services.conf
+    - templates.conf
+  notify: reload bird

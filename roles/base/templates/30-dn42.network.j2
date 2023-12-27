@@ -1,0 +1,22 @@
+[Match]
+Name=dn42
+
+[Network]
+DHCP=no
+IPv6AcceptRA=false
+
+[Address]
+Address={{ dn42_ipv4 }}/32
+
+[Address]
+Address={{ dn42_ipv6 }}/128
+
+[RoutingPolicyRule]
+Family=ipv4
+Priority=10042
+Table=42
+
+[RoutingPolicyRule]
+Family=ipv6
+Priority=10042
+Table=42
