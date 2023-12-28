@@ -1,0 +1,5 @@
+protocol bgp i_{{ peer.name | replace("-", "_") }} from ibgp_dn42 {
+  neighbor {{ hostvars[peer.name].dn42_ipv6 }} as OWNAS;
+
+  bfd graceful;
+}

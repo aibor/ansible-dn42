@@ -1,0 +1,23 @@
+protocol bgp e_dn42_rc {
+  local {{ dn42_ipv6 }} as OWNAS;
+
+  neighbor fd42:4242:2601:ac12::1 as 4242422602;
+
+  multihop;
+
+  ipv4 {
+    # export all available paths to the collector
+    add paths tx;
+
+    import none;
+    export filter f_dn42_route_collector;
+  };
+
+  ipv6 {
+    # export all available paths to the collector
+    add paths tx;
+
+    import none;
+    export filter f_dn42_route_collector;
+  };
+}

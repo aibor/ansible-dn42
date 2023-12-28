@@ -27,12 +27,19 @@
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   loop:
-    - {src: inputrc, dest: /etc/inputrc}
-    - {src: resolv.conf, dest: /etc/resolv.conf}
-    - {src: apt.conf, dest: /etc/apt/apt.conf.d/99custom}
-    - {src: bashrc, dest: /root/.bashrc}
-    - {src: prometheus-node-exporter, dest: /etc/default/}
-    - {src: prometheus-bird-exporter, dest: /etc/default/}
+    - src: inputrc
+      dest: /etc/inputrc
+    - src: resolv.conf
+      dest: /etc/resolv.conf
+    - src: apt.conf
+      dest: /etc/apt/apt.conf.d/99custom
+    - src: bashrc
+      dest: /root/.bashrc
+
+- name: hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
 
 - name: ssh configs
   copy:
@@ -45,11 +52,6 @@
     src: nftables.conf
     dest: /etc/nftables.conf
   notify: reload nftables
-
-- name: hosts
-  template:
-    src: hosts.j2
-    dest: /etc/hosts
 
 - name: network config
   template:
@@ -78,4 +80,3 @@
   loop:
     - systemd-networkd
     - nftables
-

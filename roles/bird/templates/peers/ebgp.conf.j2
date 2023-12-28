@@ -1,0 +1,14 @@
+protocol bgp e_{{ peer.name | replace('-', '_') }} from ebgp_dn42_peer {
+  neighbor {{ peer.address }} as {{ peer.asn }};
+  interface "p-{{ peer.name }}";
+
+  ipv4 {
+    import where bgp_import_dn42_peer({{ peer.latency }}, {{ peer.bandwidth }}, 34);
+    export where bgp_export_dn42_peer({{ peer.latency }}, {{ peer.bandwidth }}, 34);
+  };
+
+  ipv6 {
+    import where bgp_import_dn42_peer({{ peer.latency }}, {{ peer.bandwidth }}, 34);
+    export where bgp_export_dn42_peer({{ peer.latency }}, {{ peer.bandwidth }}, 34);
+  };
+}

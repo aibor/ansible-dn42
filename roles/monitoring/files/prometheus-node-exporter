@@ -1,0 +1,26 @@
+ARGS=--no-collector.arp \
+  --no-collector.bcache \
+  --no-collector.bonding \
+  --no-collector.btrfs \
+  --no-collector.dmi \
+  --no-collector.fibrechannel \
+  --no-collector.ipvs \
+  --no-collector.infiniband \
+  --no-collector.mdadm \
+  --no-collector.nfs \
+  --no-collector.nfsd \
+  --no-collector.nvme \
+  --no-collector.rapl \
+  --no-collector.selinux \
+  --no-collector.tapestats \
+  --no-collector.thermal_zone \
+  --no-collector.xfs \
+  --no-collector.zfs \
+  --collector.cgroups \
+  --collector.interrupts \
+  --collector.logind \
+  --collector.network_route \
+  --collector.perf \
+  --collector.processes \
+  --collector.qdisc \
+  --collector.tcpstat

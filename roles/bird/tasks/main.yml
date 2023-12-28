@@ -5,7 +5,12 @@
 
 - name: package gortr
   apt:
-    deb: "http://mirror.hetzner.de/debian/packages/pool/main/g/gortr/gortr_0.14.7-1+b5_arm64.deb"
+    deb: "http://mirror.hetzner.de/debian/packages/pool/main/g/gortr/gortr_0.14.7-1+b5_{{ debarch }}.deb"
+  vars:
+    debarchs:
+      x84_64: amd64
+      aarch64: arm64
+    debarch: "{{ debarchs[ansible_machine] }}"
 
 - name: gortr config
   copy:
@@ -29,4 +34,33 @@
     - community_filters.conf
     - services.conf
     - templates.conf
+  notify: reload bird
+
+- name: bird dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: bird
+    group: bird
+    mode: "0750"
+  loop:
+    - /etc/bird/peers
+    - /var/log/bird
+
+- name: bird dn42 route collector
+  template:
+    src: "peers/ebgp-dn42-route_collector.conf.j2"
+    dest: "/etc/bird/peers/ebgp-dn42-route_collector.conf"
+  when: bgp.route_collector | default(false)
+  notify: reload bird
+
+- name: bird peer configs
+  template:
+    src: "peers/{{ scope }}.conf.j2"
+    dest: "/etc/bird/peers/{{ scope }}-{{ peer.name }}.conf"
+  loop: "{{ bgp.peers}}"
+  loop_control:
+    loop_var: peer
+  vars:
+    scope: "{{ ('asn' in peer) | ternary('ebgp', 'ibgp') }}"
   notify: reload bird

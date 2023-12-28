@@ -1,0 +1,29 @@
+- name: packages present
+  apt:
+    name:
+      - prometheus-node-exporter
+      - prometheus-bird-exporter
+      - prometheus-blackbox-exporter
+
+- name: node exporter config
+  copy:
+    src: prometheus-node-exporter
+    dest: /etc/default/
+  notify: restart node exporter
+
+- name: bird exporter config
+  copy:
+    src: prometheus-bird-exporter
+    dest: /etc/default/
+  notify: restart bird exporter
+
+- name: blackbox exporter config
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - src: prometheus-blackbox-exporter
+      dest: /etc/default/
+    - src: blackbox.yml
+      dest: /etc/prometheus/
+  notify: restart blackbox exporter
