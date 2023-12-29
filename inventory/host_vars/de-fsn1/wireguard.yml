@@ -29,9 +29,6 @@ wireguard:
         port: 51465
         pubkey: DJXxDJYRQuqAhlsH/VYoUAk+2FTCnYOLmX+Qk+Wlflk=
         endpoint: router02.bastelfreak.org:1464
-        ipv4:
-          address: 172.23.37.33/32
-          peer: 172.20.246.130/32
         ipv6:
           address: fe80::1464/128
           peer: fe80::3668/128
