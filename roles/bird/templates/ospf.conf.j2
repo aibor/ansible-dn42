@@ -1,0 +1,30 @@
+protocol ospf v3 ospf6 {
+  ipv6 {
+    table t_igp6;
+    import filter f_ospf_import;
+    export all;
+  };
+
+  area 0 {
+    interface "dn42", "svc-*" {
+      type ptp;
+      stub;
+    };
+
+    interface -"i-de-dd1", "i-*" {
+      type ptp;
+      bfd;
+    };
+  };
+{% if wireguard.internal.peers | selectattr('name', 'eq', 'de-dd1') %}
+
+  area 44 {
+    stub;
+
+    interface "i-de-dd1" {
+      type ptp;
+      bfd;
+    };
+  };
+{% endif %}
+}

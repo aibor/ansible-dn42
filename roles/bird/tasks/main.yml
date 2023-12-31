@@ -25,6 +25,7 @@
   loop:
     - header.conf
     - services.conf
+    - ospf.conf
   notify: reload bird
 
 - name: bird static config
