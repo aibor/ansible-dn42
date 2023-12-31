@@ -13,3 +13,4 @@ bgp:
       address: fe80::3668
       latency: 1
       bandwidth: 25
+      bfd: yes
