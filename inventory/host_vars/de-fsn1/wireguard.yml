@@ -1,7 +1,7 @@
 wireguard:
   internal:
     address: fe80::42:1/64
-    peers: 
+    peers:
       - name: de-nbg1
         port: 51467
         pubkey: UWm9TkkKqhhBPr6frW4YgysswMIVkvdcdmbXRBw7Mjg=

@@ -1,0 +1,22 @@
+$ORIGIN 32/27.37.23.172.in-addr.arpa.
+$TTL 3600
+
+@	IN	SOA	ns1.aibo.dn42. dn42.aibor.de. (
+	{{ serial }}
+	1800
+	600
+	1209600
+	600
+)
+
+@	IN	NS	ns1.aibo.dn42.
+
+{% for host in groups["all"] %}
+{{ hostvars[host].dn42_ipv4 | ansible.utils.ipcut(-8) | int(base=16) }}	IN	PTR	{{ host }}.aibo.dn42.
+{% endfor %}
+
+38	IN	PTR	de-dd1.aibo.dn42.
+
+{% for service in services | sort(attribute="id") %}
+{{ service.id }}	IN	PTR	{{ service.name }}.aibo.dn42.
+{% endfor %}

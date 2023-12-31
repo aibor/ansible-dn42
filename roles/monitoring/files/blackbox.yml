@@ -1,22 +1,22 @@
 modules:
   tcp_connect:
     prober: tcp
-    timeout: 250ms
+    timeout: 5s
   icmp:
     prober: icmp
-    timeout: 250ms
+    timeout: 5s
   icmp_ttl1:
     prober: icmp
-    timeout: 250ms
+    timeout: 5s
     icmp:
       ttl: 1
   icmp_ttl2:
     prober: icmp
-    timeout: 250ms
+    timeout: 5s
     icmp:
       ttl: 2
   icmp_ttl3:
     prober: icmp
-    timeout: 250ms
+    timeout: 5s
     icmp:
       ttl: 3

@@ -1,0 +1,9 @@
+services:
+  - name: monitor
+    id: 52
+    type: monitor
+  - name: ns1
+    id: 53
+    type: nsd
+    public: yes
+runs: []

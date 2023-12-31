@@ -1,0 +1,7 @@
+[Unit]
+Requires=dn42-ip-netns@{{ service.id }}.service
+After=dn42-ip-netns@{{ service.id }}.service
+
+[Service]
+PrivateNetwork=true
+NetworkNamespacePath=/run/netns/svc-{{ service.id }}

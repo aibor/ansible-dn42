@@ -1,0 +1,34 @@
+- name: nsd packages
+  apt:
+    name:
+      - nsd
+
+- name: nsd service override
+  template:
+    src: dn42_svc_override.conf.j2
+    dest: /etc/systemd/system/nsd.service.d/dn42_svc_override.conf
+  notify: restart nsd
+
+- name: nsd config
+  copy:
+    src: nsd.conf
+    dest: /etc/nsd/nsd.conf.d/dn42.conf
+  notify: reload nsd
+
+- name: nsd zones dir
+  file:
+    path: /etc/nsd/zones
+    state: directory
+
+- name: nsd zones
+  template:
+    src: zones/{{ item }}.j2
+    dest: /etc/nsd/zones/{{ item }}
+  loop:
+    - "aibo.dn42.zone"
+    - "32-27.37.23.172.in-addr.arpa.zone"
+    - "4.c.2.c.a.d.2.c.d.c.d.f.ip6.arpa.zone"
+  vars:
+    serial: '{{ ansible_date_time.date | replace("-", "") }}00'
+  notify: reload nsd
+  register: zones

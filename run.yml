@@ -9,9 +9,6 @@
       tags: wireguard
     - role: monitoring
       tags: monitoring
-
-- hosts: de
-
-  roles:
     - role: services
       tags: services
+      when: runs

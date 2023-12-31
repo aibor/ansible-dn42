@@ -1,0 +1,31 @@
+- name: grafana repo key
+  shell: curl -Lf https://apt.grafana.com/gpg.key | gpg --dearmor -o /etc/apt/keyrings/grafana.gpg
+  args:
+    creates: /etc/apt/keyrings/grafana.gpg
+
+- name: grafana repo
+  apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main
+
+- name: monitor packages
+  apt:
+    name:
+      - prometheus
+      - grafana
+
+- name: monitor service overrides
+  template:
+    src: dn42_svc_override.conf.j2
+    dest: /etc/systemd/system/{{ item }}.service.d/dn42_svc_override.conf
+  loop:
+    - prometheus
+    - grafana-server
+  notify:
+    - restart grafana-server
+    - restart prometheus
+
+- name: prometheus config
+  template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+  notify: reload prometheus

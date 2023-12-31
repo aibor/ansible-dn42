@@ -1,0 +1,17 @@
+protocol static svc4 {
+  ipv4;
+  igp table t_igp6;
+
+  # other routers
+{% for host in groups["all"] if host != inventory_hostname %}
+  route {{ hostvars[host].dn42_ipv4 }}/32 recursive {{ hostvars[host].dn42_ipv6 }};
+{% endfor %}
+
+  # area 44
+  route 172.23.37.38/32 recursive fdcd:c2da:c2c4:4438::1;
+
+  # services
+{% for last in range(48, 63) %}
+  route 172.23.37.{{ last }}/32 recursive fdcd:c2da:c2c4:42{{ last }}::1;
+{% endfor %}
+}

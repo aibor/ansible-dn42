@@ -1,0 +1,25 @@
+$ORIGIN aibo.dn42.
+$TTL 3600
+
+@	IN	SOA	ns1.aibo.dn42. dn42.aibor.de. (
+	{{ serial }}
+	1800
+	600
+	1209600
+	600
+)
+
+@	IN	NS	ns1.aibo.dn42.
+
+{% for host in groups["all"] %}
+{{ host }}	IN	A	{{ hostvars[host].dn42_ipv4 }}
+	IN	AAAA	{{ hostvars[host].dn42_ipv6 }}
+{% endfor %}
+
+de-dd1	IN	A	172.23.37.38
+	IN	AAAA	fdcd:c2da:c2c4:4438::1
+
+{% for service in services | sort(attribute="id") %}
+{{ service.name }}	IN	A	172.23.37.{{ service.id }}
+	IN	AAAA	fdcd:c2da:c2c4:42{{ service.id }}::1
+{% endfor %}

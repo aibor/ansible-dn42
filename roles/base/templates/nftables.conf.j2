@@ -4,6 +4,10 @@ flush ruleset
 
 define OWNNET4 = { 172.23.37.32/27 }
 define OWNNET6 = { fdcd:c2da:c2c4::/48 }
+define ROUTERNET = { fdcd:c2da:c2c4::/64 }
+define MONITOR = { fdcd:c2da:c2c4:4252::/64 }
+define HOME4 = { 172.23.37.38 }
+define HOME6 = { fdcd:c2da:c2c4:44:38::/64 }
 
 table inet filter {
 	chain input {
@@ -24,11 +28,13 @@ table inet filter {
 		ip6 saddr fe80::/64 udp dport 3784 counter accept comment "BFD direct"
 
 		iifname "p-*" counter log prefix "Reject peers input: " reject
-		
-		ip6 saddr $OWNNET6 tcp dport bgp counter accept comment "BGP multihop"
-		ip6 saddr $OWNNET6 udp dport 4784 counter accept comment "BFD multihop"
 
 		ip6 saddr fe80::/64 meta l4proto ospf counter accept
+		
+		ip6 saddr $ROUTERNET tcp dport bgp counter accept comment "BGP multihop"
+		ip6 saddr $ROUTERNET udp dport 4784 counter accept comment "BFD multihop"
+
+		ip6 saddr $MONITOR tcp dport { 9100, 9115, 9324 } counter accept comment "prometheus"
 
 		counter log prefix "Reject input: " reject
 	}
@@ -45,10 +51,17 @@ table inet filter {
 		oifname "p-*" ip daddr $OWNNET4 counter goto reject_ownnet;
 		oifname "p-*" ip6 daddr $OWNNET6 counter goto reject_ownnet;
 
-		iifname "p-*" counter accept
 		oifname "p-*" counter accept
-		iifname "i-*" counter accept
 		oifname "i-*" counter accept
+
+		oifname "svc-53" udp dport domain counter accept
+		oifname "svc-53" tcp dport domain counter accept
+
+		iifname "svc-*" ct state {established, related} counter accept
+		oifname "svc-*" ct state {established, related} counter accept
+
+		ip saddr $HOME4 counter accept
+		ip6 saddr $HOME6 counter accept
 
 		counter log prefix "Reject forward: " reject with icmpx type admin-prohibited
 	}

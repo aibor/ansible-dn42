@@ -1,4 +1,27 @@
+- name: restart grafana-server
+  systemd:
+    name: grafana-server
+    daemon_reload: yes
+    state: restarted
+
+- name: restart nsd
+  systemd:
+    name: nsd
+    daemon_reload: yes
+    state: restarted
+
+- name: restart prometheus
+  systemd:
+    name: prometheus
+    daemon_reload: yes
+    state: restarted
+
 - name: reload nsd
   systemd:
     name: nsd
+    state: reloaded
+
+- name: reload prometheus
+  systemd:
+    name: prometheus
     state: reloaded

@@ -48,8 +48,8 @@
   notify: reload sshd
 
 - name: nftables configs
-  copy:
-    src: nftables.conf
+  template:
+    src: nftables.conf.j2
     dest: /etc/nftables.conf
   notify: reload nftables
 

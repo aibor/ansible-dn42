@@ -18,10 +18,13 @@
     dest: /etc/default/gortr
   notify: restart gortr
 
-- name: bird config header
+- name: bird dynamic configs
   template:
-    src: header.conf.j2
-    dest: /etc/bird/header.conf
+    src: "{{ item }}.j2"
+    dest: "/etc/bird/{{ item }}"
+  loop:
+    - header.conf
+    - services.conf
   notify: reload bird
 
 - name: bird static config
@@ -32,7 +35,6 @@
     - bird.conf
     - filters.conf
     - community_filters.conf
-    - services.conf
     - templates.conf
   notify: reload bird
 

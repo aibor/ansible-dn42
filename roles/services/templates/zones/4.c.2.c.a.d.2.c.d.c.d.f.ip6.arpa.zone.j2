@@ -1,0 +1,23 @@
+$ORIGIN 4.c.2.c.a.d.2.c.d.c.d.f.ip6.arpa.
+$TTL 3600
+
+@	IN	SOA	ns1.aibo.dn42. dn42.aibor.de. (
+	{{ serial }}
+	1800
+	600
+	1209600
+	600
+)
+
+@	IN	NS	ns1.aibo.dn42.
+
+{% for host in groups["all"] %}
+{{ (hostvars[host].dn42_ipv6 | ansible.utils.ipaddr("revdns"))[:39] }}	IN	PTR	{{ host }}.aibo.dn42.
+{% endfor %}
+
+{{ ("fdcd:c2da:c2c4:4438::1" | ansible.utils.ipaddr("revdns"))[:39] }}	IN	PTR	de-dd1.aibo.dn42.
+
+{% for service in services | sort(attribute="id") %}
+{% set ipaddr = "fdcd:c2da:c2c4:42%s::1" % service.id %}
+{{ (ipaddr | ansible.utils.ipaddr("revdns"))[:39] }}	IN	PTR	{{ service.name }}.aibo.dn42.
+{% endfor %}

@@ -1,14 +1,17 @@
 - name: restart node exporter
   systemd:
     name: prometheus-node-exporter
+    daemon_reload: yes
     state: restarted
 
 - name: restart bird exporter
   systemd:
     name: prometheus-bird-exporter
+    daemon_reload: yes
     state: restarted
 
 - name: restart blackbox exporter
   systemd:
     name: prometheus-blackbox-exporter
+    daemon_reload: yes
     state: restarted

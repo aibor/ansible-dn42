@@ -24,6 +24,8 @@
   loop:
     - src: prometheus-blackbox-exporter
       dest: /etc/default/
+    - src: blackbox-exporter-cap-override.conf
+      dest: /etc/systemd/system/prometheus-blackbox-exporter.service.d/
     - src: blackbox.yml
       dest: /etc/prometheus/
   notify: restart blackbox exporter
