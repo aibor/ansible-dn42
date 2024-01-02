@@ -9,3 +9,4 @@
     - {file: netdev, prefix: "50-"}
     - {file: network, prefix: "50-"}
     - {file: key, prefix: ""}
+  notify: reload networkd

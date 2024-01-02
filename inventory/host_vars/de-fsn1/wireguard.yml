@@ -5,9 +5,15 @@ wireguard:
       - name: de-nbg1
         port: 51467
         pubkey: UWm9TkkKqhhBPr6frW4YgysswMIVkvdcdmbXRBw7Mjg=
+        cost: 10
       - name: fi-hel1
         port: 51468
         pubkey: l3udX7VpIzdnnRRLLdErVp9Vq/GyG23Cn3mVl97H82s=
+        cost: 20
+      - name: us-ash1
+        port: 51471
+        pubkey: H2YFxCmkwCsjgV3sWeKNnUdmjcXp1zU4QT5bfLhjITQ=
+        cost: 100
       - name: de-dd1
         port: 51466
         mtu: 1412

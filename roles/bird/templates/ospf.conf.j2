@@ -10,11 +10,16 @@ protocol ospf v3 ospf6 {
       type ptp;
       stub;
     };
+{% for peer in wireguard.internal.peers if peer.name != 'de-dd1' %}
 
-    interface -"i-de-dd1", "i-*" {
+    interface "i-{{ peer.name }}" {
       type ptp;
       bfd;
+{% if 'cost' in peer %}
+      cost {{ peer.cost }};
+{% endif %}
     };
+{% endfor %}
   };
 {% if wireguard.internal.peers | selectattr('name', 'eq', 'de-dd1') %}
 

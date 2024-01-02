@@ -10,3 +10,4 @@
     - {file: network, prefix: "50-"}
     - {file: psk, prefix: ""}
     - {file: key, prefix: ""}
+  notify: reload networkd

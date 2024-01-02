@@ -3,6 +3,7 @@ bgp:
   peers:
     - name: de-nbg1
     - name: fi-hel1
+    - name: us-ash1
     - name: hrnz1
       asn: "4242422273"
       address: fe80::2273

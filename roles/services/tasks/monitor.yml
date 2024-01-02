@@ -13,6 +13,14 @@
       - prometheus
       - grafana
 
+- name: monitor service override dirs
+  file:
+    path: /etc/systemd/system/{{ item }}.service.d
+    state: directory
+  loop:
+    - prometheus
+    - grafana-server
+
 - name: monitor service overrides
   template:
     src: dn42_svc_override.conf.j2

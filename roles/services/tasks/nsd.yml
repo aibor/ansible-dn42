@@ -3,6 +3,11 @@
     name:
       - nsd
 
+- name: nsd service override dir
+  file:
+    path: /etc/systemd/system/nsd.service.d
+    state: directory
+
 - name: nsd service override
   template:
     src: dn42_svc_override.conf.j2

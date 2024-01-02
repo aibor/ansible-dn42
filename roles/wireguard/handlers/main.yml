@@ -1,0 +1,5 @@
+- name: reload networkd
+  systemd:
+    name: systemd-networkd
+    state: reloaded
+

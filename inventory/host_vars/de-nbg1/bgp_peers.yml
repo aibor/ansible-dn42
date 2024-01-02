@@ -3,6 +3,7 @@ bgp:
   peers:
     - name: de-fsn1
     - name: fi-hel1
+    - name: us-ash1
     - name: kioubit-de2
       asn: "4242423914"
       address: fe80::ade0
