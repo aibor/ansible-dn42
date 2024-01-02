@@ -8,3 +8,12 @@ wireguard:
       - name: de-nbg1
         port: 51472
         pubkey: XYqh6WK719QHzGLHYDk50D2fj3Ov+LEJDN/e6nMe4FQ=
+  external:
+    peers:
+      - name: kioubit-us2
+        port: 51473
+        pubkey: 6Cylr9h1xFduAO+5nyXhFI1XJ0+Sw9jCpCDvcqErF1s=
+        endpoint: us2.g-load.eu:21464
+        ipv6:
+          address: fe80::1464/128
+          peer: fe80::ade0/128
