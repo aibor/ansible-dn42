@@ -37,3 +37,11 @@
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
   notify: reload prometheus
+
+- name: monitor services enabled
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  loop:
+    - prometheus
+    - grafana-server
