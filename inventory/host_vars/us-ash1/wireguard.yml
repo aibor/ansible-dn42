@@ -1,7 +1,7 @@
 wireguard:
   internal:
     address: fe80::42:4/64
-    peers: 
+    peers:
       - name: de-fsn1
         port: 51471
         pubkey: ZXJhOVcGlSoXk1ZxFIMOlZKTLYz3PodnJvk9TRda+iw=
@@ -17,3 +17,10 @@ wireguard:
         ipv6:
           address: fe80::1464/128
           peer: fe80::ade0/128
+      - name: hujk-use
+        port: 51474
+        pubkey: 1LJ2PBEUOa7uwqnHS3j2EGVW+wKv/d1L6mbnA0tOjU0=
+        endpoint: use.vm.whojk.com:23317
+        ipv6:
+          address: fe80::1464/128
+          peer: fe80::2717/128
