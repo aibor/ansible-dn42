@@ -1,0 +1,4 @@
+- name: restart exceed2go
+  systemd:
+    name: exceed2go
+    state: restarted

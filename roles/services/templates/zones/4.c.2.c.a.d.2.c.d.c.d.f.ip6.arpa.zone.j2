@@ -21,3 +21,7 @@ $TTL 3600
 {% set ipaddr = "fdcd:c2da:c2c4:42%s::1" % service.id %}
 {{ (ipaddr | ansible.utils.ipaddr("revdns"))[:39] }}	IN	PTR	{{ service.name }}.aibo.dn42.
 {% endfor %}
+
+1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.e.f.f	IN	PTR	o---peer.with.me---o.
+2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.e.f.f	IN	PTR	o-----irc--aibo---o.
+3.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.e.f.f	IN	PTR	o-----email--dn42.aibor.de---o.

@@ -12,3 +12,5 @@
     - role: services
       tags: services
       when: runs
+    - role: exceed2go
+      tags: exceed2go

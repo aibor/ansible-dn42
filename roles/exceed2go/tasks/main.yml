@@ -1,0 +1,24 @@
+- name: upload package
+  copy:
+    dest: /usr/local/src/exceed2go.deb
+    src: exceed2go_linux_{{ debarch }}.deb
+  vars:
+    debarchs:
+      x86_64: amd64
+      aarch64: arm64
+    debarch: "{{ debarchs[ansible_machine] }}"
+
+- name: package exceed2go
+  apt:
+    deb: /usr/local/src/exceed2go.deb
+
+- name: exceed2go config
+  template:
+    src: exceed2go.conf.j2
+    dest: /etc/exceed2go.conf
+  notify: restart exceed2go
+
+- name: enable service
+  systemd:
+    name: exceed2go
+    enabled: yes
