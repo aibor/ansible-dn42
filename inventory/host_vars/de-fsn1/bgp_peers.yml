@@ -15,3 +15,9 @@ bgp:
       latency: 1
       bandwidth: 25
       bfd: yes
+    - name: flipez1
+      asn: "4242422776"
+      address: fe80::2776
+      latency: 1
+      bandwidth: 25
+      bfd: yes
