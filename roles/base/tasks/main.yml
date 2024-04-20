@@ -1,6 +1,13 @@
+- name: add backports repo
+  apt_repository:
+    repo: deb http://deb.debian.org/debian bookworm-backports main contrib
+
+    
 - name: packages present
   apt:
+    default_release: bookworm-backports
     update_cache: yes
+    state: latest
     name:
       - vim
       - irqbalance
@@ -9,6 +16,9 @@
       - needrestart
       - wireguard-tools
       - git
+      - "linux-image-{{ debarch }}"
+      - iproute2
+      - bpftool
 
 - name: packages absent
   apt:
