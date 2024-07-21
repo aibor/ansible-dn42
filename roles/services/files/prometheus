@@ -1,0 +1,1 @@
+ARGS="--storage.tsdb.retention.size=10GB --storage.tsdb.wal-compression"

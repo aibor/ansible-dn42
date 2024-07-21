@@ -32,6 +32,12 @@
     - restart grafana-server
     - restart prometheus
 
+- name: prometheus defaults
+  copy:
+    src: prometheus
+    dest: /etc/default/
+  notify: restart prometheus
+
 - name: prometheus config
   template:
     src: prometheus.yml.j2
