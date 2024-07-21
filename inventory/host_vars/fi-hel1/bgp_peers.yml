@@ -1,4 +1,0 @@
-bgp:
-  peers:
-    - name: de-fsn1
-    - name: de-nbg1

@@ -6,10 +6,6 @@ wireguard:
         port: 51467
         pubkey: s2iBUyJsTd/IhCMIB8seofCKUusNkz0r3dDx0ig9w0I=
         cost: 10
-      - name: fi-hel1
-        port: 51469
-        pubkey: 7U1DUCZvTCvDs109Scpe0EU98qJPGD8QizP0PXEuzFI=
-        cost: 20
       - name: us-ash1
         port: 51472
         pubkey: DwL2k1TidZkF7XiJPQPmL3tSYy/JsXExjD+wFUSbEQ8=

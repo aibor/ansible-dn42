@@ -2,7 +2,6 @@ bgp:
   route_collector: true
   peers:
     - name: de-nbg1
-    - name: fi-hel1
     - name: us-ash1
     - name: hrnz1
       asn: "4242422273"
