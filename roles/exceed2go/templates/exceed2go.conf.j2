@@ -1,3 +1,6 @@
-ARGS=--tc {% for iface in ansible_interfaces if iface.startswith('p-') or iface.startswith('i-') %}--iface {{ iface }} {% endfor %}
+ARGS=--tc {%
+  for iface in (ansible_interfaces | sort)
+  if iface.startswith('p-') or iface.startswith('i-')
+%}--iface {{ iface }} {% endfor %}
 
 ADDRS={% for num in range(4) if num > 0 %}fdcd:c2da:c2c4:ffe2::{{ num }} {% endfor %}{{ dn42_ipv6 }}
