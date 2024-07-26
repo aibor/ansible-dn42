@@ -10,6 +10,37 @@ define MONITOR6 = { fdcd:c2da:c2c4:4252::/64 }
 define HOME4 = { 172.23.37.38 }
 define HOME6 = { fdcd:c2da:c2c4:4438::/64 }
 
+{% if natpeers  %}
+table ip nat {
+	chain postrouting {
+		type nat hook postrouting priority srcnat; policy accept;
+
+{% for peer in natpeers %}
+		oifname eth0 meta mark {{ peer.natid }} counter masquerade
+{% endfor %}
+	}
+}
+
+table ip filter {
+	chain prerouting {
+		type filter hook prerouting priority filter; policy accept;
+
+		iifname eth0 meta mark set ct mark counter
+
+		iifname "i-*" goto prerouting_internal_mark
+	}
+
+	chain prerouting_internal_mark {
+		ip daddr 172.16.0.0/12 accept
+		ip daddr 10.0.0.0/8 accept
+{% for peer in natpeers %}
+		iifname "i-{{ peer.name }}" meta mark set {{ peer.natid }} counter
+{% endfor %}
+		ct mark set mark counter
+	}
+}
+
+{% endif %}
 table inet filter {
 	chain input {
 		type filter hook input priority 0; policy drop;
@@ -44,14 +75,14 @@ table inet filter {
 	chain forward {
 		type filter hook forward priority 0; policy drop;
 
-		iifname eth0 counter drop;
-		oifname eth0 counter drop;
+		iifname eth0 counter goto forward_public
+		oifname eth0 counter goto forward_public
 
-		iifname "p-*" ip saddr $OWNNET4 counter goto reject_ownnet;
-		iifname "p-*" ip6 saddr $OWNNET6 counter goto reject_ownnet;
+		iifname "p-*" ip saddr $OWNNET4 counter goto reject_ownnet
+		iifname "p-*" ip6 saddr $OWNNET6 counter goto reject_ownnet
 
-		oifname "p-*" ip daddr $OWNNET4 counter goto reject_ownnet;
-		oifname "p-*" ip6 daddr $OWNNET6 counter goto reject_ownnet;
+		oifname "p-*" ip daddr $OWNNET4 counter goto reject_ownnet
+		oifname "p-*" ip6 daddr $OWNNET6 counter goto reject_ownnet
 
 		oifname "p-*" counter accept
 		oifname "i-*" counter accept
@@ -66,6 +97,16 @@ table inet filter {
 		ip6 saddr $HOME6 counter accept
 
 		counter log prefix "Reject forward: " reject with icmpx type admin-prohibited
+	}
+
+	chain forward_public {
+{% if natpeers  %}
+{% for peer in natpeers %}
+		ct mark {{ peer.natid }} counter accept
+{% endfor %}
+
+{% endif %}
+		counter drop
 	}
 
 	chain reject_ownnet {
@@ -83,11 +124,15 @@ table inet filter {
 
 		oifname eth0 counter goto output_public
 
-		oifname "p-*" ip daddr $OWNNET4 counter goto reject_ownnet;
-		oifname "p-*" ip6 daddr $OWNNET6 counter goto reject_ownnet;
+		oifname "p-*" ip daddr $OWNNET4 counter goto reject_ownnet
+		oifname "p-*" ip6 daddr $OWNNET6 counter goto reject_ownnet
 	}
 
 	chain output_public {
+{% if natpeers  %}
+		udp dport bootps counter accept
+
+{% endif %}
 		counter log prefix "Reject public IPv4 out: " reject with icmp type admin-prohibited
 
 		udp dport { domain, ntp } counter accept

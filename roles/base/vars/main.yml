@@ -2,3 +2,4 @@ debarchs:
   x86_64: amd64
   aarch64: arm64
 debarch: "{{ debarchs[ansible_machine] }}"
+natpeers: "{{ wireguard.internal.peers | selectattr('natid', 'defined') | selectattr('natid', 'greaterthan', 0) }}"

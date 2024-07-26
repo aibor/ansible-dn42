@@ -15,6 +15,7 @@ wireguard:
         mtu: 1412
         pubkey: 1LURiaH6ukkufSmnZSh02POcI2Qfk1rVnZfphsUBQW4=
         dynamic: yes
+        natid: 44 
   external:
     peers:
       - name: kioubit-de2

@@ -15,6 +15,7 @@ wireguard:
         mtu: 1412
         pubkey: d8O/M5dMRzRRnl+n1OOaL50fUeTHPbq0WGQqknzz9BI=
         dynamic: yes
+        natid: 44
   external:
     peers:
       - name: hrnz1

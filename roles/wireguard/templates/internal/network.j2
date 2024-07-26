@@ -13,3 +13,30 @@ IPForward=yes
 
 [Address]
 Address={{ wireguard.internal.address }}
+{% if peer.natid is defined %}
+{% set fwmark = peer.natid %}
+{% set tableid = 100000 + fwmark %}
+{% set nhid = tableid %}
+
+[NextHop]
+Id={{ nhid }}
+
+[Route]
+Table={{ tableid }}
+Destination=0.0.0.0/0
+NextHop={{ nhid }}
+Metric=512
+
+[RoutingPolicyRule]
+Priority=9000
+IncomingInterface=eth0
+FirewallMark={{ fwmark }}
+Family=ipv4
+Table={{ tableid }}
+
+[RoutingPolicyRule]
+Priority=10000
+FirewallMark={{ fwmark }}
+Family=ipv4
+Table=1
+{% endif %}

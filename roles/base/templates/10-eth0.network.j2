@@ -2,33 +2,66 @@
 PermanentMACAddress={{ ansible_default_ipv6.macaddress }}
 
 [Network]
-DHCP=no
 IPv6AcceptRA=no
 LinkLocalAddressing=no
 
 [Address]
 Address={{ ansible_default_ipv6.address }}/128
 
-[Neighbor]
-Address=fe80::1
-LinkLayerAddress=d2:74:7f:6e:37:e3
-
-[Route]
-Table=1
-Gateway=fe80::1
-
-[Route]
-Table=1
-Destination=fd00::/8
-Type=prohibit
-
 [Route]
 Destination=0.0.0.0/0
 Type=unreachable
+Metric=512
 
 [Route]
 Destination=::/0
 Type=unreachable
+Metric=512
+
+[Neighbor]
+Address=fe80::1
+LinkLayerAddress=d2:74:7f:6e:37:e3
+
+[NextHop]
+Id=10
+Gateway=fe80::1
+OnLink=yes
+
+[Route]
+Table=1
+Destination=0.0.0.0/0
+NextHop=10
+Metric=512
+
+[Route]
+Table=1
+Destination=::/0
+NextHop=10
+Metric=512
+
+[Route]
+Table=1
+Destination=10.0.0.0/8
+Type=unreachable
+Metric=512
+
+[Route]
+Table=1
+Destination=172.16.0.0/12
+Type=unreachable
+Metric=512
+
+[Route]
+Table=1
+Destination=192.168.0.0/16
+Type=unreachable
+Metric=512
+
+[Route]
+Table=1
+Destination=fd00::/8
+Type=unreachable
+Metric=512
 
 [RoutingPolicyRule]
 Priority=10000
@@ -36,3 +69,17 @@ IncomingInterface=lo
 To=2000::/3
 Family=ipv6
 Table=1
+
+[DHCPv4]
+RouteTable=1
+UseDNS=no
+UseNTP=no
+UseMTU=no
+UseHostname=no
+UseDomains=no
+UseRoutes=no
+{% if natpeers %}
+
+[Network]
+DHCP=ipv4
+{% endif %}
