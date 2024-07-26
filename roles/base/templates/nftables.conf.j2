@@ -92,6 +92,7 @@ table inet filter {
 
 		iifname "svc-*" ct state {established, related} counter accept
 		oifname "svc-*" ct state {established, related} counter accept
+		oifname "svc-*" meta l4proto { icmp, icmpv6 } counter accept
 
 		ip saddr $HOME4 counter accept
 		ip6 saddr $HOME6 counter accept
