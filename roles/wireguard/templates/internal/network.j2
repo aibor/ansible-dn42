@@ -20,6 +20,8 @@ Address={{ wireguard.internal.address }}
 
 [NextHop]
 Id={{ nhid }}
+Gateway=fe80::1
+OnLink=yes
 
 [Route]
 Table={{ tableid }}
@@ -38,5 +40,24 @@ Table={{ tableid }}
 Priority=10000
 FirewallMark={{ fwmark }}
 Family=ipv4
+Table=1
+
+[Route]
+Table={{ tableid }}
+Destination=::/0
+NextHop={{ nhid }}
+Metric=512
+
+[RoutingPolicyRule]
+Priority=9000
+IncomingInterface=eth0
+FirewallMark={{ fwmark }}
+Family=ipv6
+Table={{ tableid }}
+
+[RoutingPolicyRule]
+Priority=10000
+FirewallMark={{ fwmark }}
+Family=ipv6
 Table=1
 {% endif %}

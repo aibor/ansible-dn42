@@ -11,7 +11,7 @@ define HOME4 = { 172.23.37.38 }
 define HOME6 = { fdcd:c2da:c2c4:4438::/64 }
 
 {% if natpeers  %}
-table ip nat {
+table inet nat {
 	chain postrouting {
 		type nat hook postrouting priority srcnat; policy accept;
 
@@ -21,7 +21,7 @@ table ip nat {
 	}
 }
 
-table ip filter {
+table inet filter {
 	chain prerouting {
 		type filter hook prerouting priority filter; policy accept;
 
@@ -33,9 +33,12 @@ table ip filter {
 	chain prerouting_internal_mark {
 		ip daddr 172.16.0.0/12 accept
 		ip daddr 10.0.0.0/8 accept
+		ip6 daddr fd00::/8 accept
+
 {% for peer in natpeers %}
 		iifname "i-{{ peer.name }}" meta mark set {{ peer.natid }} counter
 {% endfor %}
+
 		ct mark set mark counter
 	}
 }
