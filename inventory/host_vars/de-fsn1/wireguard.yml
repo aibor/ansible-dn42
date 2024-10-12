@@ -35,10 +35,3 @@ wireguard:
         ipv6:
           address: fe80::1464/128
           peer: fe80::3668/128
-      - name: flipez1
-        port: 51475
-        pubkey: zarM6dbj7y+ly+MnY48wHP04cXHXoxCa2ep/aT/Bp1M=
-        endpoint: "fsn1.dn42.auch.cool:51821"
-        ipv6:
-          address: fe80::1464/128
-          peer: fe80::2776/128
