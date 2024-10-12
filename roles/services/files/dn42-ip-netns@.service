@@ -14,19 +14,29 @@ Environment=NETNS_LL=fe80::42%i:2
 Environment=HOST_LL=fe80::42%i:1
 
 ExecStart=/usr/sbin/ip netns add ${NETNS_NAME}
-ExecStart=/usr/sbin/ip link add ${NETNS_NAME} address 00:00:00:00:00:01 \
-	type veth peer svc0 address 00:00:00:00:00:02 netns ${NETNS_NAME}
-ExecStart=/usr/sbin/ip link set ${NETNS_NAME} addrgenmode none up
+
 ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} link set lo up
-ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} link set ${NETNS_IFNAME} addrgenmode none up
-ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} address add ${NETNS_IP4}/32 dev ${NETNS_IFNAME}
-ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} address add ${NETNS_IP6}/128 dev ${NETNS_IFNAME}
-ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} neigh add ${HOST_LL} lladdr 00:00:00:00:00:01 dev ${NETNS_IFNAME}
-ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} route add default via ${HOST_LL} dev ${NETNS_IFNAME} onlink
-ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} -4 route add default via inet6 ${HOST_LL} dev ${NETNS_IFNAME} onlink
-ExecStart=/usr/sbin/ip address add ${HOST_LL}/128 peer ${NETNS_LL} dev ${NETNS_NAME}
-ExecStart=/usr/sbin/ip neigh add ${NETNS_LL} lladdr 00:00:00:00:00:02 dev ${NETNS_NAME}
-ExecStart=/usr/sbin/ip route add ${NETNS_IP6}/128 via ${NETNS_LL} dev ${NETNS_NAME} onlink table 42
-ExecStart=/usr/sbin/ip route add ${NETNS_IP4}/32 via inet6 ${NETNS_LL} dev ${NETNS_NAME} onlink table 42
+ExecStart=/usr/sbin/ip link add \
+	${NETNS_NAME} type netkit mode l3 peer svc0 netns ${NETNS_NAME}
+
+ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} link set \
+	${NETNS_IFNAME} addrgenmode none up
+ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} address add \
+	${NETNS_IP4}/32 dev ${NETNS_IFNAME}
+ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} address add \
+	${NETNS_IP6}/128 dev ${NETNS_IFNAME}
+ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} route add \
+	default via ${HOST_LL} dev ${NETNS_IFNAME} onlink
+ExecStart=/usr/sbin/ip -netns ${NETNS_NAME} -4 route add \
+	default via inet6 ${HOST_LL} dev ${NETNS_IFNAME} onlink
+
+ExecStart=/usr/sbin/ip link set \
+	${NETNS_NAME} addrgenmode none up
+ExecStart=/usr/sbin/ip address add \
+	${HOST_LL}/128 peer ${NETNS_LL} dev ${NETNS_NAME}
+ExecStart=/usr/sbin/ip route add \
+	${NETNS_IP4}/32 via inet6 ${NETNS_LL} dev ${NETNS_NAME} onlink table 42
+ExecStart=/usr/sbin/ip route add \
+	${NETNS_IP6}/128 via ${NETNS_LL} dev ${NETNS_NAME} onlink table 42
 
 ExecStopPost=/usr/sbin/ip netns delete ${NETNS_NAME}
