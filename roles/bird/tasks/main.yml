@@ -57,10 +57,23 @@
   when: bgp.route_collector | default(false)
   notify: reload bird
 
+- name: remove disabled peers
+  file:
+    dest: "/etc/bird/peers/{{ scope }}-{{ peer.name }}.conf"
+    state: absent
+  when: peer.disabled | default(false)
+  loop: "{{ bgp.peers}}"
+  loop_control:
+    loop_var: peer
+  vars:
+    scope: "{{ ('asn' in peer) | ternary('ebgp', 'ibgp') }}"
+  notify: reload bird
+
 - name: bird peer configs
   template:
     src: "peers/{{ scope }}.conf.j2"
     dest: "/etc/bird/peers/{{ scope }}-{{ peer.name }}.conf"
+  when: not (peer.disabled | default(false))
   loop: "{{ bgp.peers}}"
   loop_control:
     loop_var: peer

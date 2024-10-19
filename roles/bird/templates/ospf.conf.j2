@@ -10,7 +10,8 @@ protocol ospf v3 ospf6 {
       type ptp;
       stub;
     };
-{% for peer in wireguard.internal.peers if peer.name != 'de-dd1' %}
+{% for peer in wireguard.internal.peers 
+	if not (peer.disabled | default(false)) and peer.name != 'de-dd1' %}
 
     interface "i-{{ peer.name }}" {
       type ptp;
