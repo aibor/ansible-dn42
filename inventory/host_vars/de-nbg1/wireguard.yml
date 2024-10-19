@@ -6,10 +6,6 @@ wireguard:
         port: 51467
         pubkey: s2iBUyJsTd/IhCMIB8seofCKUusNkz0r3dDx0ig9w0I=
         cost: 10
-      - name: us-ash1
-        port: 51472
-        pubkey: DwL2k1TidZkF7XiJPQPmL3tSYy/JsXExjD+wFUSbEQ8=
-        cost: 100
       - name: de-dd1
         port: 51466
         mtu: 1412
