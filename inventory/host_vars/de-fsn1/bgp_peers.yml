@@ -2,11 +2,6 @@ bgp:
   route_collector: true
   peers:
     - name: de-nbg1
-    - name: hrnz1
-      asn: "4242422273"
-      address: fe80::2273
-      latency: 1
-      bandwidth: 25
     - name: bastel1
       asn: "4242423668"
       address: fe80::3668
