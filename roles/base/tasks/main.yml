@@ -19,6 +19,7 @@
       - "linux-image-{{ debarch }}"
       - iproute2
       - bpftool
+      - hardening-runtime
 
 - name: packages absent
   apt:

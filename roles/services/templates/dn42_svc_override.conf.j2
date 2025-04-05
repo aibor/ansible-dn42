@@ -5,3 +5,6 @@ After=dn42-ip-netns@{{ service.id }}.service
 [Service]
 PrivateNetwork=true
 NetworkNamespacePath=/run/netns/svc-{{ service.id }}
+
+# Disable due to no userns with hardened-runtime
+PrivateUsers=false
